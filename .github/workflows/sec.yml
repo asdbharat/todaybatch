@@ -1,5 +1,9 @@
 name: Testing Secret Variables
-
+  run: 
+    test_context_variables() {
+      echo "This is a test"
+    }
+ test_context_variables
 on:
   workflow_dispatch
 env:

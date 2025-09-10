@@ -1,34 +1,18 @@
-name: Node.js CI Workflow           # 1. Name of the workflow (shown in GitHub Actions UI)
+name: Testing Workflow Variables
 
-on:                                 # 2. Trigger for the workflow
-  push:                             # 3. Trigger on push events
-    branches:                       # 4. Restrict to only the 'main' branch
-      - main
+on:
+  workflow_dispatch
 
-env:                                # 5. Global environment variables (available in all jobs)
-  NODE_ENV: production              # 6. Set NODE_ENV to 'production'
-  VERSION: 1.0.0                    # 7. Set VERSION to 1.0.0
+env:
+  cloud: google-cloud
 
-jobs:                               # 8. Define all jobs (each is a separate unit of work)
-  build:                            # 9. Job name: 'build'
-    runs-on: ubuntu-latest          # 10. Runner type (GitHub-hosted Ubuntu machine)
-
-    steps:                          # 11. List of steps in the job
-      - name: Checkout repository   # 12. First step: checkout code
-        uses: actions/checkout@v4   # 13. Uses GitHub's official checkout action
-
-      - name: Set up Node.js        # 14. Step to set up Node.js
-        uses: actions/setup-node@v4 # 15. Uses GitHub’s Node.js setup action
-        with:
-          node-version: '18'        # 16. Specifies Node.js version
-
-      - name: Install dependencies  # 17. Install project dependencies
-        run: npm install            # 18. Runs `npm install` in the root directory
-
-      - name: Run tests             # 19. Run project tests
-        run: npm test               # 20. Runs `npm test` script defined in package.json
-
-      - name: Print environment vars  # 21. Show environment variable usage
-        run: |
-          echo "Environment: $NODE_ENV"
-          echo "App Version: $VERSION"
+jobs:
+  greeting_job:
+    runs-on: ubuntu-latest
+    env:
+      Greeting: Hello
+    steps:
+      - name: "Say Hello Mona it's Monday"
+        run: echo "$Greeting $First_Name is using $cloud!"
+        env:
+          First_Name: Vishal

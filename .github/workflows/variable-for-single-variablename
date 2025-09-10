@@ -1,36 +1,18 @@
-name: Test Environment Variables
+name: Testing Workflow Variables
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch
 
-env:  # Global environment variables (available in all jobs and steps)
-  MY_GLOBAL_VAR: "This is a global variable"
-  GREETING: "Hello from workflow level"
+env:
+  cloud: google-cloud
 
 jobs:
-  test-variables:
+  greeting_job:
     runs-on: ubuntu-latest
-
-    env:  # Job-level environment variable (can override global)
-      GREETING: "Hello from job level"
-      JOB_VAR: "This is job-level variable"
-
+    env:
+      Greeting: Hello
     steps:
-      - name: Step 1 - Print all environment variables
-        run: |
-          echo "GREETING: $GREETING"
-          echo "MY_GLOBAL_VAR: $MY_GLOBAL_VAR"
-          echo "JOB_VAR: $JOB_VAR"
-          echo "STEP_VAR: $STEP_VAR"
-
-      - name: Step 2 - Override with step-level variable
+      - name: "Say Hello Mona it's Monday"
+        run: echo "$Greeting $First_Name is using $cloud!"
         env:
-          STEP_VAR: "This is step-level variable"
-          GREETING: "Hello from step level"
-        run: |
-          echo "GREETING: $GREETING"
-          echo "MY_GLOBAL_VAR: $MY_GLOBAL_VAR"
-          echo "JOB_VAR: $JOB_VAR"
-          echo "STEP_VAR: $STEP_VAR"
+          First_Name: Vishal
